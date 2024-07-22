@@ -1,0 +1,230 @@
+/* Calendar.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.calendar-container {
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1100px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.month-name {
+    font-size: 2.5em;
+}
+
+.calendar-body {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2em;
+}
+
+th, td {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-size: 1.1em;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.nav-buttons button {
+    margin: 0 10px;
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.jump-to {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.jump-to input, .jump-to select {
+    margin: 0 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 150px;
+    text-align: center;
+}
+
+.jump-to button {
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.jump-to button:hover {
+    background-color: #0056b3;
+}
+
+.appointment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.appointment-form input, .appointment-form select, .appointment-form textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 300px;
+}
+
+.appointment-form button {
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.appointment-form button:hover {
+    background-color: #0056b3;
+}
+
+.appointments {
+    margin: 20px 0;
+    width: 90%;
+    max-width: 3000px;
+}
+
+.appointment {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: white;
+}
+
+/* Ensure cells have enough height */
+td {
+    position: relative;
+    vertical-align: top;
+    height: 120px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Add scrollable container for names */
+.names-container {
+    max-height: 80px;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+/* Ensure names are positioned properly */
+.appointment-link {
+    display: block;
+    font-size: 0.7em;
+    color: #007BFF;
+    text-decoration: none;
+    margin-top: 1px;
+}
+
+.appointment-link:hover {
+    text-decoration: underline;
+}
+
+/* Date styling */
+.appointment-date {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* Add a border to distinguish between cells if needed */
+td {
+    border: 1px solid #ddd;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

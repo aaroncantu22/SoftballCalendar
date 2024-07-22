@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="Calendar.css"> <!-- Include your CSS file -->
+</head>
+<body>
+    <div id="calendar" class="calendar-container"></div>
+
+    <div class="jump-to">
+        <input type="number" id="jump-month" placeholder="Month (1-12)" min="1" max="12">
+        <input type="number" id="jump-year" placeholder="Year (2024-2026)" min="2024" max="2026">
+        <button onclick="jumpToMonth()">Jump to Month</button>
+    </div>
+
+    <script>
+        const startYear = 2024;
+        const startMonth = 7; // August
+        const endYear = 2026;
+        const endMonth = 11; // December
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        let currentYear = startYear;
+        let currentMonth = startMonth;
+        let appointments = [];
+
+        function generateCalendar(year, month) {
+            const calendarContainer = document.getElementById('calendar');
+            calendarContainer.innerHTML = '';
+
+            const calendarHeader = document.createElement('div');
+            calendarHeader.className = 'calendar-header';
+            const monthName = document.createElement('div');
+            monthName.className = 'month-name';
+            monthName.innerText = `${monthNames[month]} ${year}`;
+            calendarHeader.appendChild(monthName);
+
+            const navButtons = document.createElement('div');
+            navButtons.className = 'nav-buttons';
+            const prevButton = document.createElement('button');
+            prevButton.innerText = '<';
+            prevButton.onclick = showPreviousMonth;
+            const nextButton = document.createElement('button');
+            nextButton.innerText = '>';
+            nextButton.onclick = showNextMonth;
+            navButtons.appendChild(prevButton);
+            navButtons.appendChild(nextButton);
+
+            calendarHeader.appendChild(navButtons);
+            calendarContainer.appendChild(calendarHeader);
+
+            const calendarBody = document.createElement('div');
+            calendarBody.className = 'calendar-body';
+
+            const table = document.createElement('table');
+
+            const thead = document.createElement('thead');
+            const theadRow = document.createElement('tr');
+            daysOfWeek.forEach(day => {
+                const th = document.createElement('th');
+                th.innerText = day;
+                theadRow.appendChild(th);
+            });
+            thead.appendChild(theadRow);
+
+            const tbody = document.createElement('tbody');
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            let date = 1;
+            let row = document.createElement('tr');
+            for (let i = 0; i < 7; i++) {
+                if (i < firstDay) {
+                    const cell = document.createElement('td');
+                    cell.innerText = '';
+                    row.appendChild(cell);
+                } else if (date <= daysInMonth) {
+                    const cell = document.createElement('td');
+                    cell.innerText = date;
+                    const dateKey = `${year}-${month + 1}-${date}`;
+                    if (appointments[dateKey] && appointments[dateKey].length > 0) {
+                        cell.className = 'has-appointments';
+                        cell.onclick = () => showAppointmentDetails(dateKey, date);
+                    }
+                    row.appendChild(cell);
+                    date++;
+                }
+            }
+            tbody.appendChild(row);
+
+            while (date <= daysInMonth) {
+                row = document.createElement('tr');
+                for (let i = 0; i < 7; i++) {
+                    if (date <= daysInMonth) {
+                        const cell = document.createElement('td');
+                        cell.innerText = date;
+                        const dateKey = `${year}-${month + 1}-${date}`;
+                        if (appointments[dateKey] && appointments[dateKey].length > 0) {
+                            cell.className = 'has-appointments';
+                            cell.onclick = () => showAppointmentDetails(dateKey, date);
+                        }
+                        row.appendChild(cell);
+                        date++;
+                    } else {
+                        const cell = document.createElement('td');
+                        cell.innerText = '';
+                        row.appendChild(cell);
+                    }
+                }
+                tbody.appendChild(row);
+            }
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            calendarBody.appendChild(table);
+            calendarContainer.appendChild(calendarBody);
+        }
+
+        function showPreviousMonth() {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            generateCalendar(currentYear, currentMonth);
+        }
+
+        function showNextMonth() {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            generateCalendar(currentYear, currentMonth);
+        }
+
+        function jumpToMonth() {
+            const month = parseInt(document.getElementById('jump-month').value, 10) - 1;
+            const year = parseInt(document.getElementById('jump-year').value, 10);
+
+            if (month >= 0 && month <= 11 && year >= startYear && year <= endYear) {
+                currentMonth = month;
+                currentYear = year;
+                generateCalendar(currentYear, currentMonth);
+            } else {
+                alert('Please enter a valid month and year.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCalendar(currentYear, currentMonth);
+        });
+    </script>
+</body>
+</html>
