@@ -1,0 +1,358 @@
+/* Calendar.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.calendar-container {
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 10000px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.month-name {
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.calendar-body {
+    padding: 20px;
+    max-width: 10000px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2em;
+    max-height:10000px;
+    max-width: 10000px;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #dddddd;
+    vertical-align: top;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-size: 1.1em;
+}
+tr {
+    max-width: fit-content;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    
+}
+
+.nav-buttons button {
+    margin: 0 10px;
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.nav-buttons input {
+    margin: 0 10px;
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.nav-buttons a {
+    margin: 0 10px;
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background-color: #0056b3;
+}
+.nav-buttons input:hover {
+    background-color: #b30000;
+}
+.nav-buttons a:hover {
+    background-color: #0056b3;
+}
+.jump-to {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.jump-to input, .jump-to select {
+    margin: 0 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 150px;
+    text-align: center;
+}
+
+.jump-to button {
+    padding: 15px 20px;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.jump-to button:hover {
+    background-color: gray;
+}
+
+.appointment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    font-size: x-large;
+}
+
+.appointment-form input, .appointment-form select, .appointment-form textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: x-large;
+    width: 300px;
+}
+
+.appointment-form button {
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.appointment-form button:hover {
+    background-color: #0056b3;
+}
+
+.appointments {
+    margin: 20px 0;
+    width: 90%;
+    max-width: 5000px;
+}
+
+.appointment {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: white;
+}
+
+/* Ensure cells have enough height */
+td {
+    position: relative;
+    vertical-align: top;
+    height: 120px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Add scrollable container for names */
+.names-container {
+    max-height: 80px;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    max-width: fit-content; /* Adjust width as needed */
+}
+.names-wrapper{
+    display: flex;
+    justify-content: center; /* Horizontally center-align */
+    align-items: center;     /* Vertically center-align, if needed */
+    padding: 5px;            /* Optional: Add padding to the wrapper */
+    max-width: 100%; /* Prevent it from exceeding the cell width */
+    cursor: pointer;
+}
+/* Wrapper for centering the scroll box */
+.holiday-wrapper {
+    display: flex;
+    justify-content: center; /* Horizontally center-align */
+    align-items: center;     /* Vertically center-align, if needed */
+    padding: 0px;            /* Optional: Add padding to the wrapper */
+}
+
+/* Styles for holiday scroller */
+.holiday-container {
+    max-height: 80px;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    max-width: fit-content; /* Adjust width as needed */
+}
+
+
+/* Ensure names are positioned properly */
+.appointment-link {
+    display: block;
+    font-size:medium;
+    color: #007BFF;
+    text-decoration: none;
+    margin-top: 1px;
+}
+.holiday-link {
+    display: block;
+    font-size:medium;
+    color: #000000;
+    text-decoration: none;
+    margin-top: 1px;
+}
+
+.appointment-link:hover {
+    text-decoration: underline;
+}
+
+/* Date styling */
+.appointment-date {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* Add a border to distinguish between cells if needed */
+td {
+    border: 1px solid #ddd;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.hide-bg{
+    mix-blend-mode: multiply;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.image2{
+    max-height: 25%;
+    mix-blend-mode: multiply;
+    display: block;
+    max-width: 25%;
+    height: auto;
+    margin: 0 auto;
+}
+
+body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        padding-top: 60px; /* Adjust this value to match the height of your fixed header */
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f4f4f4; /* Adjust as necessary */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: calc(100% - 20px); /* Ensure it does not exceed viewport width */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.welcome-message {
+    font-size: 18px;
+    color: #333; /* Adjust as necessary */
+    margin-right: 20px;
+}
+
+.logout-button {
+    text-decoration: none;
+    color: #ffffff; /* White text color */
+    background-color: #0056b3; /* Darker blue background color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #003f7f; /* Darker blue on hover */
+}
+
+.image-container {
+    margin-top: 100px; /* Add margin-top to push the image down from the header */
+    text-align: center;
+}
