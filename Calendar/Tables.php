@@ -90,28 +90,27 @@ try {
 </head>
 <!--Appointments Construction-->
 <div class="appointment-form">
-        <h2>Schedule an Appointment</h2>
-       
-        <form action="add_appointment.php" method="post">
+    <h2>Schedule an Appointment</h2>
+    <form action="add_appointment.php" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
 
         <label for="lesson_type">Lesson Type:</label>
-    <select id="lesson_type" name="lesson_type" required>
-        <option value="Pitching for pitchers">Pitching for pitchers</option>
-        <option value="Hitting">Hitting</option>
-        <option value="Fielding">Fielding</option>
-        <option value="Catching for catchers">Catching for catchers</option>
-        <option value="Basic throwing">Basic throwing</option>
-        <option value="Basic catching">Basic catching</option>
-        <option value="Baserunning">Baserunning</option>
-    </select><br>
+        <select id="lesson_type" name="lesson_type" required>
+            <option value="Pitching for pitchers">Pitching for pitchers</option>
+            <option value="Hitting">Hitting</option>
+            <option value="Fielding">Fielding</option>
+            <option value="Catching for catchers">Catching for catchers</option>
+            <option value="Basic throwing">Basic throwing</option>
+            <option value="Basic catching">Basic catching</option>
+            <option value="Baserunning">Baserunning</option>
+        </select><br>
 
         <label for="payment">Payment:</label>
-        <input type="text" id="payment" name="payment" required><br>
+        <input type="number" id="payment" name="payment" step="0.01" min="0" required><br>
 
         <label for="cost">Cost:</label>
-        <input type="number" id="cost" name="cost" required><br>
+        <input type="number" id="cost" name="cost" step="0.01" min="0" required><br>
 
         <label for="notes">Notes:</label>
         <input type="text" id="notes" name="notes"><br>
@@ -120,12 +119,13 @@ try {
         <input type="datetime-local" id="appointment_date" name="appointment_date" required><br>
 
         <label for="duration">Duration (minutes):</label>
-    <select id="duration" name="duration" required>
-        <option value="45">45 minutes</option>
-        <option value="60">60 minutes</option>
-    </select><br>
-    <div class = "nav-buttons">
-        <input type="submit" value="Schedule Appointment">
+        <select id="duration" name="duration" required>
+            <option value="45">45 minutes</option>
+            <option value="60">60 minutes</option>
+        </select><br>
+        <div class="nav-buttons">
+            <input type="submit" value="Schedule Appointment">
         </div>
     </form>
 </div>
+</html>

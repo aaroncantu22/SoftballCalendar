@@ -10,6 +10,16 @@ echo "<button onclick='redirect2Tables()'>View Appointment Tables</button>";
 echo "<button onclick='printCalendar()'>Print Calendar</button>";
 echo "</div>";
 
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: login_Page.html");
+    exit();
+}
+$username = $_SESSION['user'];
+
+
 // Fetch default settings from the database
 $conn = new PDO($dsn, $dbusername, $dbpassword);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -55,7 +65,6 @@ function getUSHolidays($year) {
 
     return $holidays;
 }
-
 function generateCalendar($month, $year, $appointments) {
     $daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
@@ -89,10 +98,11 @@ function generateCalendar($month, $year, $appointments) {
         }
 
         $date = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-" . str_pad($currentDay, 2, '0', STR_PAD_LEFT);
-        echo "<td>$currentDay";
+        echo "<td>";
+        echo "<button class='day-button' data-date='$date' onclick='window.location.href=\"daily_calendar.php?date=$date\"'>$currentDay</button>";
 
         if (isset($appointments[$currentDay])) {
-            echo "<div class = 'names-wrapper'>";
+            echo "<div class='names-wrapper'>";
             echo "<div class='names-container'>";
             foreach ($appointments[$currentDay] as $appointment) {
                 $timeRange = date('g:iA', strtotime($appointment['start_time'])) . '-' . date('g:iA', strtotime($appointment['end_time']));
@@ -108,7 +118,7 @@ function generateCalendar($month, $year, $appointments) {
                 $holidayList .= "<div class='holiday-link'>$holidayName</div>";
             }
         }
-        echo"<div class='holiday-wrapper'>";
+        echo "<div class='holiday-wrapper'>";
         if ($holidayList) {
             echo "<div class='holiday-container'>$holidayList</div>";
         }
@@ -151,7 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_defaults'])) {
     $month = isset($_GET['month']) ? intval($_GET['month']) : ($defaultSettings['default_month'] ?? 10);
     $year = isset($_GET['year']) ? intval($_GET['year']) : ($defaultSettings['default_year'] ?? 2024);
 }
-
 $appointments = getAppointments($month, $year);
 ?>
 
@@ -170,6 +179,12 @@ $appointments = getAppointments($month, $year);
     <script src="Modal.js" defer></script>
 </head>
 <body>
+<div class="header">
+        <div class="welcome-message">
+            Welcome <?php echo htmlspecialchars($username);?>!
+        </div>
+        <a class="logout-button" href="logout.php">Logout</a>
+    </div>
     <div class="calendar-container">
         <div class="calendar-header">
             <div class="nav-buttons">
@@ -222,7 +237,7 @@ $appointments = getAppointments($month, $year);
             <?php generateCalendar($month, $year, $appointments); ?>
         </div>
     </div>
-
+    
     <!-- Modal Template -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content">
@@ -231,45 +246,45 @@ $appointments = getAppointments($month, $year);
         </div>
     </div>
 
-    <!--Appointments Construction-->
-    <div class="appointment-form">
-        <h2>Schedule an Appointment</h2>
-        <form action="add_appointment.php" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br>
+   <!--Appointments Construction-->
+<div class="appointment-form">
+    <h2>Schedule an Appointment</h2>
+    <form action="add_appointment.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
 
-            <label for="lesson_type">Lesson Type:</label>
-            <select id="lesson_type" name="lesson_type" required>
-                <option value="Pitching for pitchers">Pitching for pitchers</option>
-                <option value="Hitting">Hitting</option>
-                <option value="Fielding">Fielding</option>
-                <option value="Catching for catchers">Catching for catchers</option>
-                <option value="Basic throwing">Basic throwing</option>
-                <option value="Basic catching">Basic catching</option>
-                <option value="Baserunning">Baserunning</option>
-            </select><br>
+        <label for="lesson_type">Lesson Type:</label>
+        <select id="lesson_type" name="lesson_type" required>
+            <option value="Pitching for pitchers">Pitching for pitchers</option>
+            <option value="Hitting">Hitting</option>
+            <option value="Fielding">Fielding</option>
+            <option value="Catching for catchers">Catching for catchers</option>
+            <option value="Basic throwing">Basic throwing</option>
+            <option value="Basic catching">Basic catching</option>
+            <option value="Baserunning">Baserunning</option>
+        </select><br>
 
-            <label for="payment">Payment:</label>
-            <input type="text" id="payment" name="payment" required><br>
+        <label for="payment">Payment:</label>
+        <input type="number" id="payment" name="payment" step="0.01" min="0" required><br>
 
-            <label for="cost">Cost:</label>
-            <input type="number" id="cost" name="cost" required><br>
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost" step="0.01" min="0" required><br>
 
-            <label for="notes">Notes:</label>
-            <input type="text" id="notes" name="notes"><br>
+        <label for="notes">Notes:</label>
+        <input type="text" id="notes" name="notes"><br>
 
-            <label for="appointment_date">Appointment Date:</label>
-            <input type="datetime-local" id="appointment_date" name="appointment_date" required><br>
+        <label for="appointment_date">Appointment Date:</label>
+        <input type="datetime-local" id="appointment_date" name="appointment_date" required><br>
 
-            <label for="duration">Duration (minutes):</label>
-            <select id="duration" name="duration" required>
-                <option value="45">45 minutes</option>
-                <option value="60">60 minutes</option>
-            </select><br>
-            <div class="nav-buttons">
-                <input type="submit" value="Schedule Appointment">
-            </div>
-        </form>
-    </div>
+        <label for="duration">Duration (minutes):</label>
+        <select id="duration" name="duration" required>
+            <option value="45">45 minutes</option>
+            <option value="60">60 minutes</option>
+        </select><br>
+        <div class="nav-buttons">
+            <input type="submit" value="Schedule Appointment">
+        </div>
+    </form>
+</div>
 </body>
 </html>

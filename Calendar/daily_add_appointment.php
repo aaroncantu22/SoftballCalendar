@@ -21,11 +21,10 @@ try {
         $appointment_date = filter_input(INPUT_POST, 'appointment_date', FILTER_SANITIZE_STRING);
         $duration = filter_input(INPUT_POST, 'duration', FILTER_VALIDATE_INT);
 
-        if (!$name || !$lesson_type || !$payment || !$cost || !$appointment_date || !$duration) {
+        if (!$name || !$lesson_type || $payment === false || $cost === false || !$appointment_date || !$duration) {
             echo "Invalid input. Please ensure all fields are filled correctly.";
-            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "                                              ";
-            echo "<a href='Calendar.php'>Back to Calendar</a>";
+            echo "<br><a href='Tables.php'>Back to Appointment Tables</a>";
+            echo "<br><a href='Calendar.php'>Back to Calendar</a>";
             exit;
         }
 
@@ -65,7 +64,7 @@ try {
             echo "<h2> Appointment conflict: Please choose a different time.</h2>";
             echo "<div class='nav-buttons'>";
             echo "<a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "                                              ";
+            echo "<br>";
             echo "<a href='Calendar.php'>Back to Calendar</a>";
             echo "</div>";
         } else {
@@ -83,10 +82,13 @@ try {
                 ':appointment_date' => $appointment_date,
                 ':duration' => $duration
             ]);
-            echo "<h2>Appointment added successfully. </h2>";
+            echo "<h2>Appointment added successfully.</h2>";
             echo "<div class='nav-buttons'>";
-            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "                                              ";
+
+            // Format the date to Y-m-d and pass it to the daily calendar page
+            $formattedDate = date('Y-m-d', strtotime($appointment_date));
+            echo "<a href='daily_calendar.php?date=" . urlencode($formattedDate) . "'>Back to Daily Calendar</a>";
+            echo "<br>";
             echo "<a href='Calendar.php'>Back to Calendar</a>";
             echo "</div>";
         }
@@ -104,5 +106,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Calendar.css">
-    </head>
-    </html>
+</head>
+<body>
+</body>
+</html>

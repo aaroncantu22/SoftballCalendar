@@ -310,3 +310,81 @@ td {
     height: auto;
     margin: 0 auto;
 }
+
+body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        padding-top: 60px; /* Adjust this value to match the height of your fixed header */
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f4f4f4; /* Adjust as necessary */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: calc(100% - 20px); /* Ensure it does not exceed viewport width */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.welcome-message {
+    font-size: 18px;
+    color: #333; /* Adjust as necessary */
+    margin-right: 20px;
+}
+
+.logout-button {
+    text-decoration: none;
+    color: #ffffff; /* White text color */
+    background-color: #0056b3; /* Darker blue background color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #003f7f; /* Darker blue on hover */
+}
+
+.image-container {
+    margin-top: 100px; /* Add margin-top to push the image down from the header */
+    text-align: center;
+}
+/* Style for the day button to make it look like plain text */
+.day-button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+}
+
+/* Add a hover effect */
+.day-button:hover {
+    text-decoration: underline;
+    color: blue; /* Change to desired hover color */
+}
+
+/* Ensure the names-container does not have a max-height or overflow */
+.names-container {
+    max-height: none; /* Ensure it displays all names */
+    overflow: visible; /* Ensure it doesn't scroll */
+}
+
+/* Optional: Style for holiday links if needed */
+.holiday-link {
+    color: red;
+}
+
+/* Optional: Hover effect for holidays */
+.holiday-link:hover {
+    text-decoration: underline;
+}

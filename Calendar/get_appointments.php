@@ -33,4 +33,6 @@ function getAppointments($month, $year) {
 
     return $appointments;
 }
+
+
 ?>

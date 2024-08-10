@@ -38,6 +38,7 @@ function printCalendar() {
     newWin.document.write('th, td { padding: 8px; text-align: center; border: 1px solid #ddd; }');
     newWin.document.write('.holiday-link { color: red; }');
     newWin.document.write('.appointment-link { color: blue; }');
+    newWin.document.write('.day-button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; text-decoration: none; padding: 0;}');
     newWin.document.write('</style>');
     newWin.document.write('</head><body>');
     newWin.document.write('<h1>Calendar for ' + monthYear + '</h1>');
@@ -45,8 +46,8 @@ function printCalendar() {
     newWin.document.write('</body></html>');
     newWin.document.close();
     newWin.print();
+    
 }
-
 
 function showPreviousMonth() {
     navigateMonth(-1);
@@ -136,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 function redirect2Calendar(){
     location.href = 'Calendar.php'
 }

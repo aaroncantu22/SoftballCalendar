@@ -26,6 +26,7 @@ if (isset($_GET["appointment_id"])) {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Edit Appointment</title>
+                <link rel="stylesheet" href="Calendar.css">
             </head>
             <body>
             <div class="appointment-form">
@@ -34,7 +35,6 @@ if (isset($_GET["appointment_id"])) {
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($appointment['id']); ?>">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($appointment['name']); ?>" required><br>
-                    <link rel="stylesheet" href="Calendar.css">
 
                     <label for="lesson_type">Lesson Type:</label>
                     <select id="lesson_type" name="lesson_type" required>
@@ -48,10 +48,10 @@ if (isset($_GET["appointment_id"])) {
                     </select><br>
 
                     <label for="payment">Payment:</label>
-                    <input type="text" id="payment" name="payment" value="<?php echo htmlspecialchars($appointment['payment']); ?>" required><br>
+                    <input type="number" step="0.01" id="payment" name="payment" value="<?php echo htmlspecialchars($appointment['payment']); ?>" required><br>
 
                     <label for="cost">Cost:</label>
-                    <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($appointment['cost']); ?>" required><br>
+                    <input type="number" step="0.01" id="cost" name="cost" value="<?php echo htmlspecialchars($appointment['cost']); ?>" required><br>
 
                     <label for="notes">Notes:</label>
                     <input type="text" id="notes" name="notes" value="<?php echo htmlspecialchars($appointment['notes']); ?>"><br>
@@ -64,14 +64,14 @@ if (isset($_GET["appointment_id"])) {
                         <option value="45" <?php echo ($appointment['duration'] == 45) ? 'selected' : ''; ?>>45 minutes</option>
                         <option value="60" <?php echo ($appointment['duration'] == 60) ? 'selected' : ''; ?>>60 minutes</option>
                     </select><br>
-                    <div class = "nav-buttons">
-        <input type="submit" value="Update Appointment">
-        </div>
+                    <div class="nav-buttons">
+                        <input type="submit" value="Update Appointment">
+                    </div>
                 </form>
-                <div class = "navbuttons">
-                <button onclick="window.location.href='Tables.php'">Back to Appointment Tables</button>
+                <div class="nav-buttons">
+                    <button onclick="window.location.href='Tables.php'">Back to Appointment Tables</button>
                 </div>
-                </div>
+            </div>
             </body>
             </html>
 
