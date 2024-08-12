@@ -109,8 +109,8 @@ try {
             }
         }
 
-        // Specific logic for the 23, 24, 30, and 60-minute gaps
-        if (in_array($timeGap, [23, 24, 30, 60]) && $prevAppointment && $currentAppointment) {
+        // Specific logic for the 15, 23, 24, 30, 45,and 60-minute gaps
+        if (in_array($timeGap,[15,23, 24, 30, 45, 60]) && $prevAppointment && $currentAppointment) {
             $prevEndTime = strtotime($prevAppointment['appointment_date'] . ' + ' . $prevAppointment['duration'] . ' minutes');
             $currentEndTime = strtotime($currentAppointment['appointment_date'] . ' + ' . $currentAppointment['duration'] . ' minutes');
 
