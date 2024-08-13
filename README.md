@@ -16,6 +16,7 @@ New Features in Version 1.7: Includes buttons for adding, editing, and deleting 
 
 Files
 
+Create a folder to put the files in I called mine Calendar
 
 daily_calendar.php: Main file for displaying the daily calendar view. Includes functionality for viewing, managing, and displaying appointments. Features time gap customization and appointment merging logic.
 Calendar.php: Main file for displaying the calendar view with navigation and default month/year settings. Displays holidays and appointments for the selected month and year.
@@ -59,8 +60,8 @@ Usage
 Accessing the Application:
 
 Open your browser and navigate to http://localhost/daily_calendar.php to access the daily calendar view.
-Navigate to http://localhost/Calendar.php for the monthly calendar view.
-Navigate to http://localhost/Tables.php to view appointments in a tabular format.
+Navigate to http://localhost/Calendar/Calendar.php for the monthly calendar view.
+Navigate to http://localhost/Calendar/Tables.php to view appointments in a tabular format.
 
 Login:
 
