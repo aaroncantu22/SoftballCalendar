@@ -1,13 +1,20 @@
 Softball Calendar Appointment System
-Overview
+
+Overview:
+
 The Softball Calendar Appointment System is a PHP-based application designed to manage and display appointments. It features a calendar interface for visualizing appointments, a table view for detailed appointment information, and functionality for adding, editing, and deleting appointments. The system connects to a MySQL database to store and retrieve appointment data and default settings. This version, 1.8, includes bug fixes, Google Calendar integration, and new features.
 
-Features
+Features:
+
 Calendar View: Displays appointments in a calendar format with navigation controls to view different months and years. Holidays are also marked.
 Appointment Tables: Provides a tabular view of all appointments, allowing users to view, edit, or delete them.
 Default Settings: Allows users to set default month and year for the calendar view.
 Appointment Management: Users can schedule new appointments with details such as name, lesson type, payment, cost, and duration.
+Daily Calendar View: Displays appointments for a specific day on a daily calendar overview that could also be saved onto google calendar. 
+
 New Features in Version 1.8:
+
+
 Google Calendar Integration: Users can now save all appointments from the daily calendar view to their Google Calendar.
 
 A "Save to Google Calendar" button is available, allowing users to export their appointments with a single click.
@@ -15,35 +22,14 @@ The account used for saving is the one signed in through the Google OAuth2 flow.
 Users will receive confirmation messages for successful saves or errors if the save fails.
 Other Enhancements: Includes buttons for adding, editing, and deleting appointments directly from the daily calendar.
 
-Files
-Create a folder to put the files in. I called mine Calendar.
-
-daily_calendar.php: Main file for displaying the daily calendar view. Includes functionality for viewing, managing, and displaying appointments. Features time gap customization, appointment merging logic, and Google Calendar integration.
-Calendar.php: Main file for displaying the calendar view with navigation and default month/year settings. Displays holidays and appointments for the selected month and year.
-Tables.php: Provides a tabular view of all appointments with functionality to view, edit, and delete appointments.
-Daily_Calendar.css: CSS file for styling the daily calendar interface.
-Daily_Calendar.js: JavaScript file for handling dynamic interactions and calendar functionalities.
-Modal.css: CSS file for modal styling used in the appointment management interface.
-Modal.js: JavaScript file for modal functionalities, including opening and closing modals.
-login_Page.html: Login page for user authentication.
-daily_add_appointment.php: Script for adding new appointments.
-oauth2callback.php: Handles the OAuth2 authorization flow for Google Calendar integration.
-save_to_google_calendar.php: Script that processes the export of daily calendar appointments to Google Calendar.
-SoftballCalendar.jpeg and SoftballCalendar2.jpeg: Images used in the calendar interface.
-favicon.ico: Icon for the application.
-Database Setup
-Create Database:
-Create a MySQL database named calendar_db.
-Import Schema:
-Import the required schema and data into the database (details not provided in this project). The database should include tables named appointments and default_settings.
-Configuration
-Update the database connection details in daily_calendar.php, Calendar.php, and Tables.php with your MySQL server credentials:
+Files: Coming soon!
 
 php
 Copy code
-$dsn = "mysql:host=127.0.0.1:3307;dbname=calendar_db";
+$dsn = "mysql:host=your_dsn&portnumber; dbname=calendar_db";
 $dbusername = "root";
-$dbpassword = "your_password";
+$dbpassword = "your_password"; //using password (yes)
+
 Installation
 Setup Environment:
 Install XAMPP and ensure Apache and MySQL services are running.
