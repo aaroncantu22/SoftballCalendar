@@ -1,9 +1,10 @@
+
 <?php
 // Set the default timezone
 date_default_timezone_set('UTC');
 
 // Connect to the database
-$dsn = "mysql:host=127.0.0.1:3307;dbname=calendar_db";
+$dsn = "mysql:host=127.0.0.1:3306;dbname=calendar_db";
 $dbusername = "root";
 $dbpassword = "manicquail735";
 
@@ -13,6 +14,7 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Sanitize and validate input
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
         $lesson_type = filter_input(INPUT_POST, 'lesson_type', FILTER_SANITIZE_STRING);
         $payment = filter_input(INPUT_POST, 'payment', FILTER_VALIDATE_FLOAT);
@@ -21,10 +23,12 @@ try {
         $appointment_date = filter_input(INPUT_POST, 'appointment_date', FILTER_SANITIZE_STRING);
         $duration = filter_input(INPUT_POST, 'duration', FILTER_VALIDATE_INT);
 
-        if (!$name || !$lesson_type || $payment === false || $cost === false || !$appointment_date || !$duration) {
-            echo "Invalid input. Please ensure all fields are filled correctly.";
-            echo "<br><a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "<br><a href='Calendar.php'>Back to Calendar</a>";
+        if (!$id || !$name || !$lesson_type || !$payment || !$cost || !$appointment_date || !$duration) {
+            echo "<h2>Invalid input. Please ensure all fields are filled correctly.</h2>";
+            echo "<div class='nav-buttons'>";
+            echo "<a href='Calendar.php'>Back to Calendar</a>";
+            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
+            echo "</div>";
             exit;
         }
 
@@ -35,9 +39,10 @@ try {
         // Calculate the start and end time with 10-minute gap
         $gap = new DateInterval('PT10M'); // 10 minutes interval
 
-        // Check if the new appointment overlaps with existing ones
-        $query = "SELECT appointment_date, duration FROM appointments";
-        $stmt = $conn->query($query);
+        // Check if the updated appointment conflicts with existing ones
+        $query = "SELECT id, appointment_date, duration FROM appointments WHERE id != ?";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([$id]);
         $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $conflict = false;
@@ -61,15 +66,14 @@ try {
         }
 
         if ($conflict) {
-            echo "<h2> Appointment conflict: Please choose a different time.</h2>";
+            echo "<h2>Appointment conflict: Please choose a different time.</h2>";
             echo "<div class='nav-buttons'>";
-            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "<br>";
             echo "<a href='Calendar.php'>Back to Calendar</a>";
+            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
             echo "</div>";
         } else {
-            // Insert the new appointment
-            $query = "INSERT INTO appointments (name, lesson_type, payment, cost, credit, notes, appointment_date, duration) VALUES (:name, :lesson_type, :payment, :cost, :credit, :notes, :appointment_date, :duration)";
+            // Update the appointment
+            $query = "UPDATE appointments SET name = :name, lesson_type = :lesson_type, payment = :payment, cost = :cost, credit = :credit, notes = :notes, appointment_date = :appointment_date, duration = :duration WHERE id = :id";
             $stmt = $conn->prepare($query);
             $credit = $payment - $cost;
             $stmt->execute([
@@ -80,17 +84,22 @@ try {
                 ':credit' => $credit,
                 ':notes' => $notes,
                 ':appointment_date' => $appointment_date,
-                ':duration' => $duration
+                ':duration' => $duration,
+                ':id' => $id
             ]);
-            echo "<h2>Appointment added successfully. </h2>";
+
+            // Extract the date from the appointment_date
+            $date = (new DateTime($appointment_date))->format('Y-m-d');
+            $redirectUrl = "daily_calendar.php?date=$date";
+
+            // Display the success message and the button to redirect
+            echo "<h2>Appointment updated successfully!</h2>";
             echo "<div class='nav-buttons'>";
-            echo "<a href='Tables.php'>Back to Appointment Tables</a>";
-            echo "<br>";
-            echo "<a href='Calendar.php'>Back to Calendar</a>";
+            echo "<a href='$redirectUrl' class='button'>Back to Daily Calendar</a>";
             echo "</div>";
         }
     } else {
-        header("Location: ../Tables.php");
+        header("Location: Tables.php");
     }
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());

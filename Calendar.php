@@ -1,6 +1,33 @@
 <?php
+// Start the session
+session_start();
+
+// Include the Google API client library
+require_once 'vendor/autoload.php'; // Adjust the path as needed
+
+// Configure the Google Client
+$client = new Google_Client();
+$client->setAuthConfig('client_secret_658903576011-887mvp8v7ro1lac6i42n5t3nqo23hijj.apps.googleusercontent.com.json');
+$client->addScope(Google_Service_Calendar::CALENDAR_READONLY);
+$client->setRedirectUri('http://localhost/SoftballCalendar/Calendar/oauth2callback.php');
+
+// Check if the user is authenticated with Google
+if (!isset($_SESSION['access_token']) || $_SESSION['access_token'] === null) {
+    // User is not authenticated, redirect to OAuth2 callback page
+    header('Location: http://localhost/SoftballCalendar/Calendar/oauth2callback.php');
+    exit();
+}
+
+// Set the access token for the client
+$client->setAccessToken($_SESSION['access_token']);
+
+// If the token is expired, refresh it
+if ($client->isAccessTokenExpired()) {
+    // Refresh the token
+    $_SESSION['access_token'] = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+}
 // Connect to the database
-$dsn = "mysql:host=127.0.0.1:3307;dbname=calendar_db";
+$dsn = "mysql:host=127.0.0.1:3306;dbname=calendar_db";
 $dbusername = "root";
 $dbpassword = "manicquail735";
 echo "<img class = 'image2' src='SoftballCalendar.jpeg' alt='jpeg'>";
@@ -8,9 +35,8 @@ echo "<img class = 'hide-bg' src='SoftballCalendar2.jpeg' alt='jpeg'>";
 echo "<div class='nav-buttons'>";
 echo "<button onclick='redirect2Tables()'>View Appointment Tables</button>";
 echo "<button onclick='printCalendar()'>Print Calendar</button>";
+echo "<button class='action-button add-button' id='openAppointmentForm'>Schedule an Appointment</button>";
 echo "</div>";
-
-session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['user'])) {
@@ -246,45 +272,54 @@ $appointments = getAppointments($month, $year);
         </div>
     </div>
 
-   <!--Appointments Construction-->
-<div class="appointment-form">
-    <h2>Schedule an Appointment</h2>
-    <form action="add_appointment.php" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
 
-        <label for="lesson_type">Lesson Type:</label>
-        <select id="lesson_type" name="lesson_type" required>
-            <option value="Pitching for pitchers">Pitching for pitchers</option>
-            <option value="Hitting">Hitting</option>
-            <option value="Fielding">Fielding</option>
-            <option value="Catching for catchers">Catching for catchers</option>
-            <option value="Basic throwing">Basic throwing</option>
-            <option value="Basic catching">Basic catching</option>
-            <option value="Baserunning">Baserunning</option>
-        </select><br>
+    <div id="addAppointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="center-text">Schedule an Appointment</h2>
+            <div class="appointment-form">
+                <form action="daily_add_appointment.php" method="post">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required><br>
 
-        <label for="payment">Payment:</label>
-        <input type="number" id="payment" name="payment" step="0.01" min="0" required><br>
+                    <label for="lesson_type">Lesson Type:</label>
+                    <select id="lesson_type" name="lesson_type" required>
+                        <option value="Pitching for pitchers">Pitching for pitchers</option>
+                        <option value="Hitting">Hitting</option>
+                        <option value="Fielding">Fielding</option>
+                        <option value="Catching for catchers">Catching for catchers</option>
+                        <option value="Basic throwing">Basic throwing</option>
+                        <option value="Basic catching">Basic catching</option>
+                        <option value="Baserunning">Baserunning</option>
+                    </select><br>
 
-        <label for="cost">Cost:</label>
-        <input type="number" id="cost" name="cost" step="0.01" min="0" required><br>
+                    <label for="payment">Payment:</label>
+                    <input type="number" id="payment" name="payment" step="0.01" min="0" required><br>
 
-        <label for="notes">Notes:</label>
-        <input type="text" id="notes" name="notes"><br>
+                    <label for="cost">Cost:</label>
+                    <input type="number" id="cost" name="cost" step="0.01" min="0" required><br>
 
-        <label for="appointment_date">Appointment Date:</label>
-        <input type="datetime-local" id="appointment_date" name="appointment_date" required><br>
+                    <label for="notes">Notes:</label>
+                    <input type="text" id="notes" name="notes"><br>
 
-        <label for="duration">Duration (minutes):</label>
-        <select id="duration" name="duration" required>
-            <option value="45">45 minutes</option>
-            <option value="60">60 minutes</option>
-        </select><br>
-        <div class="nav-buttons">
-            <input type="submit" value="Schedule Appointment">
+                    <label for="appointment_date">Appointment Date:</label>
+                    <input type="datetime-local" id="appointment_date" name="appointment_date" required><br>
+
+
+                    <label for="duration">Duration (minutes):</label>
+                    <select id="duration" name="duration" required>
+                        <option value="45">45 minutes</option>
+                        <option value="60">60 minutes</option>
+                    </select><br>
+                    <label for="override_gap" class="small-text">Override 10-minute gap:</label>
+                    <input type="checkbox" id="override_gap" name="override_gap" class="small-text-checkbox"><br>
+
+                    <div class="nav-buttons">
+                        <input type="submit" value="Schedule Appointment">
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-</div>
+    </div>
 </body>
 </html>

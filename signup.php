@@ -1,6 +1,6 @@
 <?php
 // Connect to the database
-$dsn = "mysql:host=127.0.0.1;port=3307;dbname=loginaccounts";
+$dsn = "mysql:host=127.0.0.1;port=3306;dbname=loginaccounts";
 $dbusername = "root";
 $dbpassword = "manicquail735";
 // Corrected superglobal names

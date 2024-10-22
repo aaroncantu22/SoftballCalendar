@@ -1,6 +1,6 @@
 <?php
 // Connect to the database
-$dsn = "mysql:host=127.0.0.1:3307;dbname=calendar_db";
+$dsn = "mysql:host=127.0.0.1:3306;dbname=calendar_db";
 $dbusername = "root";
 $dbpassword = "manicquail735";
 

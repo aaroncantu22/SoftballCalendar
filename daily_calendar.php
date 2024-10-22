@@ -2,7 +2,7 @@
 // daily_calendar.php
 
 // Database connection parameters
-$dsn = "mysql:host=127.0.0.1:3307;dbname=calendar_db";
+$dsn = "mysql:host=127.0.0.1:3306;dbname=calendar_db";
 $dbusername = "root";
 $dbpassword = "manicquail735";
 
@@ -38,6 +38,7 @@ try {
     echo "<div class='nav-buttons'>";
     echo "<button onclick='redirect2Calendar()'>Go Back to Calendar</button>";
     echo "<button onclick='print_DailyCalendar()'>Print Daily Calendar</button>";
+    echo "<button onclick='saveToGoogleCalendar()'>Save to Google Calendar</button>";
     echo "</div>";
 
     // Set default time gap (in minutes)
@@ -295,6 +296,38 @@ try {
     function closeModal() {
         document.getElementById('appointmentModal').style.display = 'none';
     }
+    // Inside your <script> tag in daily_calendar.php
+function saveToGoogleCalendar() {
+    const appointments = [];
+    
+    // Collect appointment data from the calendar
+    document.querySelectorAll('.rappointment-link').forEach(function(link) {
+        const appointmentData = JSON.parse(link.getAttribute('data-appointment'));
+        appointments.push(appointmentData);
+    });
+    
+    // Send appointments to save_to_google_calendar.php via AJAX
+    fetch('save_to_google_calendar.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ appointments: appointments })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Appointments saved successfully to Google Calendar.");
+        } else {
+            alert("Failed to save appointments to Google Calendar.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while saving appointments to Google Calendar.");
+    });
+}
+
 </script>
     <!-- Modal structure -->
     <div id="appointmentModal" class="modal">
