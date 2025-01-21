@@ -1,1 +1,1 @@
-Version 1.7 contains bug fixes and new features such as add appointment edit appointment and delete appointment buttons on the daily calendar.
+Version 1.9 contains a feature where you can edit appointments and delete appointments directly from the modal in the Calendar.php
