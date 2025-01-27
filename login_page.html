@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+    <div class="login_form_container">
+        <div class="login_form">
+            <h2>Login</h2>
+            <form action="login.php" method="post">
+                <div class="input_group">
+                    <i class="fa fa-user"></i>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        class="input_text"
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+                <div class="input_group">
+                    <i class="fa fa-unlock-alt"></i>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        class="input_text"
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+                <div class="button_group" id="login_button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(".input_text").focus(function(){
+    $(this).prev('.fa').addClass('glowIcon');
+});
+
+$(".input_text").focusout(function(){
+    $(this).prev('.fa').removeClass('glowIcon');
+});
+    </script>
+</body>
+</html>
